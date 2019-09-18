@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'django_ninja/css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div id="gold_tally">
+            <h4 class="count">Your Gold:</h4>
+            <div id="count">
+                <p>{{request.session.goldcount}}</p>
+            </div>
+        </div>
+        <div id="cards">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'django_ninja/images/farm.jpeg' %}" class="card-img-top" alt="farm">
+            <div class="card-body">
+              <h5 class="card-title">Farm</h5>
+              <p class="card-text">With a lot of hard work, you can a lot of money. Up to 10-15 golds are available in return for labor at the farm.</p>
+              <form action="http://localhost:8000/process_money" method="post">
+                {% csrf_token %}
+                    <input type="hidden" class="form-check-input" name="location" value="farm">
+                    <button type="submit" class="btn btn-primary">Get to work!</button>
+                </form>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'django_ninja/images/cave.jpeg' %}" class="card-img-top" alt="cave">
+            <div class="card-body">
+              <h5 class="card-title">Cave</h5>
+              <p class="card-text">Exploring caves is dangerous. Many people have gotten lost or injured. But the risk could bring a reward of 5-10 golds.</p>
+              <form action="http://localhost:8000/process_money" method="post">
+                {% csrf_token %}
+                    <input type="hidden" class="form-check-input" name="location" value="cave">
+                    <button type="submit" class="btn btn-primary">Go splunking!</button>
+                </form>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'django_ninja/images/house.jpeg' %}" class="card-img-top" alt="house">
+            <div class="card-body">
+              <h5 class="card-title">House</h5>
+              <p class="card-text">If you stick around the house, maybe grandma will give you some chores to do. It's pretty easy, but you only get 2-5 golds.</p>
+              <form action="http://localhost:8000/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" class="form-check-input" name="location" value="house">
+                <button type="submit" class="btn btn-primary">Stay lazy!</button>
+                </form>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'django_ninja/images/casino.jpeg' %}" class="card-img-top" alt="casino">
+            <div class="card-body">
+              <h5 class="card-title">Casino</h5>
+              <p class="card-text">Go big or go home. You could make it rich at the casino, or you could lose a lot. There are 50 golds to be won or lost.</p>
+              <form action="http://localhost:8000/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" class="form-check-input" name="location" value="casino">
+                <button type="submit" class="btn btn-primary">Place your bets!</button>
+                </form>
+            </div>
+        </div>
+        </div>
+        <div id="activities">
+            <h4>Activities:</h4>
+            <div id="history">
+                {{request.session.activities | safe}}
+            </div>
+            <form action="http://localhost:8000/process_money" method="post">
+                {% csrf_token %}
+                <input type="hidden" class="form-check-input" name="location" value="restart">
+                <button type="submit" class="btn btn-primary">Play New Game!</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
